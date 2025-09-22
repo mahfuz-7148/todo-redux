@@ -2,7 +2,6 @@ import React from 'react'
 import {CheckCircle2, Circle, Filter, Plus, Trash2} from 'lucide-react';
 import {TodoFilter} from './todoFilter.jsx';
 import {TodoForm} from './todoForm.jsx';
-import {TodoItem} from './todoItem.jsx';
 
 export const TodoApp = () => {
   return (
