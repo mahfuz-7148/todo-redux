@@ -3,14 +3,14 @@ import {CheckCircle2, Circle, Filter, Plus, Trash2} from 'lucide-react';
 import {TodoFilter} from './todoFilter.jsx';
 import {TodoForm} from './todoForm.jsx';
 import {useSelector} from 'react-redux';
-import {selectFilter, selectFilteredTodos, selectTodos, selectTodosStats} from '../store/selector.js';
+import {selectFilter, selectFilteredTodos, selectIsAddingTodo, selectTodos, selectTodosStats} from '../store/selector.js';
 
 export const TodoApp = () => {
   const todos = useSelector(selectTodos)
   const filteredTodos = useSelector(selectFilteredTodos)
   const stats = useSelector(selectTodosStats)
   const filter = useSelector(selectFilter)
-
+  const isAddingTodo = useSelector(selectIsAddingTodo)
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 py-8 px-4'>
