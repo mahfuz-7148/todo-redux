@@ -51,16 +51,25 @@ export const TodoApp = () => {
              <button className='flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium cursor-pointer'>
                <Plus size={20} /> Add todo
              </button>
-             <div className='flex items-center gap-2'>
-               <button className='flex items-center gap-3 text-red-600 hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm'>
-                 <Trash2 size={20} /> Clear Completed
-               </button>
-               <button className='flex items-center gap-3 text-green-600 hover:text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm'>
-                 <CheckCircle2 size={20} /> Mark All Completed
-               </button>
-             </div>
+             {
+               stats.total > 0 &&
+              ( <div className='flex items-center gap-2'>
+                {
+                  stats.completed > 0 &&
+                  (<button className='flex items-center gap-3 text-red-600 hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm'>
+                    <Trash2 size={20} /> Clear Completed
+                  </button>)
+                }
+                {
+                  stats.active > 0 &&
+                  (<button className='flex items-center gap-3 text-green-600 hover:text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm'>
+                    <CheckCircle2 size={20} /> Mark All Completed
+                  </button>)
+                }
+               </div>)
+             }
            </div>
-           <TodoFilter />
+           <TodoFilter stats={stats} currentFilter={filter}/>
          </div>
          <div className='p-6 border-b border-gray-300 bg-gray-100'>
            <TodoForm />
