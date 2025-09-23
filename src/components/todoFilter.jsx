@@ -8,6 +8,7 @@ export const TodoFilter = ({stats, currentFilter}) => {
     {key: 'completed', label: 'Completed', icon: CheckCircle, count: stats.completed },
   ]
   return (
+
     <div className='flex items-center justify-center'>
       <div className='inline-flex bg-gray-200 rounded-lg p-1'>
         {
