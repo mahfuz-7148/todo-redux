@@ -16,7 +16,6 @@ export const TodoApp = () => {
   const isAddingTodo = useSelector(selectIsAddingTodo)
   // console.log(todos)
 
-
   const handleAddTodoClick = () => {
     dispatch(setIsAddingTodo(true))
   }
@@ -112,9 +111,9 @@ export const TodoApp = () => {
            </div>
              ) : (
                <div className='divide-y divide-gray-300'>
-                 {filteredTodos.map((todo,index) => {
+                 {filteredTodos.map((todo,index) => (
                    <TodoItem key={todo.id} todo={todo} index={index}/>
-                 })}
+                 ))}
                </div>
              )}
          </div>

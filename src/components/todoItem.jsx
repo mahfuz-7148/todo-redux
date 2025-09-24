@@ -28,7 +28,7 @@ export const TodoItem = ({todo, index}) => {
           <Check size={14} />
         </button>
         <div className="flex-1 min-w-0">
-          <div className="text-gray-800 leading-relaxed"></div>
+          <div className="text-gray-800 leading-relaxed">{todo.text}</div>
           <div className="flex items-center gap-4 mt-2 text-xl text-gray-600">
             <div className="flex items-center gap-1">
               <Calendar size={12} />
