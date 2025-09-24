@@ -14,7 +14,7 @@ export const TodoFilter = ({stats, currentFilter}) => {
         {
           filters.map(({key, label, icon: Icon, count}) => {
             return (
-              <button className={`flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all duration-200 ${currentFilter === key ? 'bg-white text-gray-800 shadow-md' : 'text-gray-700 hover:text-gray-800 hover: bg-gray-300'}`}>
+              <button className={`flex items-center gap-2 px-2 py-2 rounded-md text-sm font-medium transition-all duration-200 ${currentFilter === key ? 'bg-white text-gray-800 shadow-md' : 'text-gray-700 hover:text-gray-800 hover: bg-gray-300'}`} key={key}>
                 <Icon size={16} />
                 <span>{label}</span>
                 <span>{count}</span>

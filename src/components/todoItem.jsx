@@ -1,6 +1,6 @@
 import {Calendar, Check, Edit3, Trash2} from 'lucide-react';
 
-export const TodoItem = () => {
+export const TodoItem = ({todo, index}) => {
   return (
     <div className="group p-4 hover:bg-gray-100 transition-all duration-200">
       <div className="flex items-start gap-3">

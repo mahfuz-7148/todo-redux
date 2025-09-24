@@ -4,6 +4,7 @@ import {TodoFilter} from './todoFilter.jsx';
 import {TodoForm} from './todoForm.jsx';
 import {useSelector} from 'react-redux';
 import {selectFilter, selectFilteredTodos, selectIsAddingTodo, selectTodos, selectTodosStats} from '../store/selector.js';
+import {TodoItem} from './todoItem.jsx';
 
 export const TodoApp = () => {
   const todos = useSelector(selectTodos)
@@ -71,22 +72,41 @@ export const TodoApp = () => {
            </div>
            <TodoFilter stats={stats} currentFilter={filter}/>
          </div>
-         <div className='p-6 border-b border-gray-300 bg-gray-100'>
-           <TodoForm />
-         </div>
-         <div className='max-h-96 overflow-y-auto'>
-           <div className='p-12 text-center'>
-             <div className='text-gray-600'>
-               <Circle size={48} className='mx-auto mb-4 opacity-50'/>
-               <p className='text-lg font-medium mb-2 text-gray-800'>No todos yet</p>
-               <p className='text-lg font-medium mb-2 text-gray-800'>Add your first todo to get started</p>
+         {
+           isAddingTodo && (
+             <div className='p-6 border-b border-gray-300 bg-gray-100'>
+               <TodoForm />
              </div>
-             <div className='text-gray-600'>
+           )
+         }
+         <div className='max-h-96 overflow-y-auto'>
+           {filteredTodos.length === 0 ? (
+           <div className='p-12 text-center'>
+             {todos.length === 0 ? (
+               <div className='text-gray-600'>
+                 <Circle size={48} className='mx-auto mb-4 opacity-50'/>
+                 <p className='text-lg font-medium mb-2 text-gray-800'>No todos yet</p>
+                 <p className='text-lg font-medium mb-2 text-gray-800'>Add your first todo to get started</p>
+               </div>
+             ) : (
+               <div className='text-gray-600'>
                <Filter size={48} className='mx-auto mb-4 opacity-50'/>
-               <p className='text-lg font-medium mb-2 text-gray-800'>No filter todos
+               <p className='text-lg font-medium mb-2 text-gray-800'>No {filter} todos
+                 <p className='text-sm'>
+                   {filter === 'completed' && 'all your todos are completed'}
+                   {filter === 'active' && 'no completed todos yet, keep going'}
+                 </p>
                </p>
              </div>
+             )}
            </div>
+             ) : (
+               <div className='divide-y divide-gray-300'>
+                 {filteredTodos.map((todo,index) => {
+                   <TodoItem key={todo.id} todo={todo} index={index}/>
+                 })}
+               </div>
+             )}
          </div>
        </div>
      </div>
