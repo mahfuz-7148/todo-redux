@@ -2,16 +2,24 @@ import React from 'react'
 import {CheckCircle2, Circle, Filter, Plus, Trash2} from 'lucide-react';
 import {TodoFilter} from './todoFilter.jsx';
 import {TodoForm} from './todoForm.jsx';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectFilter, selectFilteredTodos, selectIsAddingTodo, selectTodos, selectTodosStats} from '../store/selector.js';
 import {TodoItem} from './todoItem.jsx';
+import {setIsAddingTodo} from '../store/todoSlice.js';
 
 export const TodoApp = () => {
+  const dispatch = useDispatch()
   const todos = useSelector(selectTodos)
   const filteredTodos = useSelector(selectFilteredTodos)
   const stats = useSelector(selectTodosStats)
   const filter = useSelector(selectFilter)
   const isAddingTodo = useSelector(selectIsAddingTodo)
+  // console.log(todos)
+
+
+  const handleAddTodoClick = () => {
+    dispatch(setIsAddingTodo(true))
+  }
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 py-8 px-4'>
@@ -20,36 +28,38 @@ export const TodoApp = () => {
          <h1 className='text-4xl font-bold text-gray-800 mb-2'>TodoBux</h1>
          <p>Organize your life, one task at a time</p>
        </div>
-       <div className='bg-white/90 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-gray-300 shadow-lg'>
-         <div className='flex items-center justify-between mb-4'>
-           <h2 className='text-lg font-semibold text-gray-800'>Progress Overview</h2>
-           <div className='text-2xl font-bold text-green-600'>
-             {stats.completionPercentage}%
+       {stats.total > 0 && (
+         <div className='bg-white/90 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-gray-300 shadow-lg'>
+           <div className='flex items-center justify-between mb-4'>
+             <h2 className='text-lg font-semibold text-gray-800'>Progress Overview</h2>
+             <div className='text-2xl font-bold text-green-600'>
+               {stats.completionPercentage}%
+             </div>
+           </div>
+           <div className='w-full bg-gray-300 rounded-full h-3 mb-4'>
+             <div className='bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out' style={{width:`${stats.completionPercentage}%`}}>
+             </div>
+           </div>
+           <div className='grid grid-cols-3 gap-4 text-center'>
+             <div>
+               <div className='text-2xl font-bold text-gray-800'>{stats.total}</div>
+               <div className='text-sm text-gray-600'>Total</div>
+             </div>
+             <div>
+               <div className='text-2xl font-bold text-gray-800'>{stats.active}</div>
+               <div className='text-sm text-gray-600'>Active</div>
+             </div>
+             <div>
+               <div className='text-2xl font-bold text-gray-800'>{stats.completed}</div>
+               <div className='text-sm text-gray-600'>Completed</div>
+             </div>
            </div>
          </div>
-         <div className='w-full bg-gray-300 rounded-full h-3 mb-4'>
-           <div className='bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out' style={{width:`${stats.completionPercentage}%`}}>
-           </div>
-         </div>
-         <div className='grid grid-cols-3 gap-4 text-center'>
-           <div>
-             <div className='text-2xl font-bold text-gray-800'>{stats.total}</div>
-             <div className='text-sm text-gray-600'>Total</div>
-           </div>
-           <div>
-             <div className='text-2xl font-bold text-gray-800'>{stats.active}</div>
-             <div className='text-sm text-gray-600'>Active</div>
-           </div>
-           <div>
-             <div className='text-2xl font-bold text-gray-800'>{stats.completed}</div>
-             <div className='text-sm text-gray-600'>Completed</div>
-           </div>
-         </div>
-       </div>
+       )}
        <div className='bg-white/90 backdrop-blur-sm rounded-b-2xl border border-gray-300 shadow-lg overflow-hidden'>
          <div className='p-6 border-b border-gray-300'>
            <div className='flex items-center justify-between mb-4'>
-             <button className='flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium cursor-pointer'>
+             <button onClick={handleAddTodoClick} className='flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium cursor-pointer'>
                <Plus size={20} /> Add todo
              </button>
              {
@@ -75,7 +85,7 @@ export const TodoApp = () => {
          {
            isAddingTodo && (
              <div className='p-6 border-b border-gray-300 bg-gray-100'>
-               <TodoForm />
+               <TodoForm placeholder='Add a new Todo..'/>
              </div>
            )
          }
