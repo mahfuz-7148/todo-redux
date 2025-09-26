@@ -10,13 +10,15 @@ export const TodoForm = ({OnSubmit, OnCancel, initialValue = '', placeholder}) =
   const handleSubmit = e => {
     e.preventDefault()
     const trimmedText = text.trim()
-    if (OnSubmit) {
-      OnSubmit(trimmedText)
+    if (trimmedText) {
+      if (OnSubmit) {
+        OnSubmit(trimmedText)
+      }
+      else {
+        dispatch(addTodo(trimmedText))
+      }
+      setText('')
     }
-    else {
-      dispatch(addTodo(trimmedText))
-    }
-    setText('')
   }
 
   const handleCancel = () => {
