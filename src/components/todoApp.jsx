@@ -5,7 +5,7 @@ import {TodoForm} from './todoForm.jsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectFilter, selectFilteredTodos, selectIsAddingTodo, selectTodos, selectTodosStats} from '../store/selector.js';
 import {TodoItem} from './todoItem.jsx';
-import {setIsAddingTodo} from '../store/todoSlice.js';
+import {setFilter, setIsAddingTodo} from '../store/todoSlice.js';
 
 export const TodoApp = () => {
   const dispatch = useDispatch()
@@ -18,6 +18,9 @@ export const TodoApp = () => {
 
   const handleAddTodoClick = () => {
     dispatch(setIsAddingTodo(true))
+  }
+  const handleFilter = (newFilter) => {
+    dispatch(setFilter(newFilter))
   }
 
   return (
@@ -79,7 +82,7 @@ export const TodoApp = () => {
                </div>)
              }
            </div>
-           <TodoFilter stats={stats} currentFilter={filter}/>
+           <TodoFilter stats={stats} currentFilter={filter} OnFilter={handleFilter}/>
          </div>
          {
            isAddingTodo && (

@@ -1,7 +1,8 @@
 import {Calendar, Check, Edit3, Trash2} from 'lucide-react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {toggleTodo} from '../store/todoSlice.js';
+import {deleteTodo, toggleTodo, updateTodo} from '../store/todoSlice.js';
+import {TodoForm} from './todoForm.jsx';
 
 export const TodoItem = ({todo, index}) => {
   const dispatch = useDispatch()
@@ -18,6 +19,31 @@ export const TodoItem = ({todo, index}) => {
   }
   const handleToggle = () => {
     dispatch(toggleTodo(todo.id))
+  }
+  const handleDelete = () => {
+    setIsDeleting(true)
+    setTimeout(() => {
+      dispatch(deleteTodo(todo.id))
+    }, 200)
+  }
+  const handleUpdate = (text) => {
+    dispatch(updateTodo({
+      id: todo.id,
+      updates: {text: text.trim()}
+    }))
+    setIsEditing(false)
+  }
+  if (isEditing) {
+    return (
+      <div className='p-4 bg-gray-100'>
+        <TodoForm
+          initialValue={todo.text}
+          OnSubmit={handleUpdate}
+          OnCancel={() => setIsEditing(false)}
+          placeholder='Update Your todo'
+        />
+      </div>
+    )
   }
   return (
     <div className={`group p-4 hover:bg-gray-100 transition-all duration-200 ${isDeleting 
@@ -44,10 +70,10 @@ export const TodoItem = ({todo, index}) => {
           </div>
         </div>
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
-          <button className="p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-200 rounded-lg transition-all duration-200">
+          <button onClick={() => setIsEditing(true)} className="p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-200 rounded-lg transition-all duration-200">
             <Edit3 size={16} />
           </button>
-          <button className="p-2 text-gray-500 hover:text-red-600 hover:bg-gray-200 rounded-lg transition-all duration-200">
+          <button onClick={handleDelete} className="p-2 text-gray-500 hover:text-red-600 hover:bg-gray-200 rounded-lg transition-all duration-200">
             <Trash2 size={16} />
           </button>
         </div>

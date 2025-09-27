@@ -26,8 +26,23 @@ const todoSlice = createSlice({
         todo.completed = !todo.completed
         todo.updatedAt = new Date().toISOString()
       }
+    },
+    deleteTodo: (state, action) => {
+      state.items = state.items.filter(todo => todo.id !== action.payload)
+    },
+    updateTodo: (state, action) => {
+      const {id, updates} = action.payload
+      const todo = state.items.find(todo => todo.id === id)
+      if (todo) {
+        Object.assign(todo, updates, {
+          updatedAt: new Date().toISOString()
+        })
+      }
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload
     }
   }
 })
-export const {setIsAddingTodo, addTodo, toggleTodo} = todoSlice.actions
+export const {setIsAddingTodo, addTodo, toggleTodo, deleteTodo, updateTodo, setFilter} = todoSlice.actions
 export default todoSlice.reducer
