@@ -5,7 +5,7 @@ import {TodoForm} from './todoForm.jsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectFilter, selectFilteredTodos, selectIsAddingTodo, selectTodos, selectTodosStats} from '../store/selector.js';
 import {TodoItem} from './todoItem.jsx';
-import {setFilter, setIsAddingTodo} from '../store/todoSlice.js';
+import {clearCompleted, markAllComplete, setFilter, setIsAddingTodo} from '../store/todoSlice.js';
 
 export const TodoApp = () => {
   const dispatch = useDispatch()
@@ -21,6 +21,12 @@ export const TodoApp = () => {
   }
   const handleFilter = (newFilter) => {
     dispatch(setFilter(newFilter))
+  }
+  const handleMarkComplete = () => {
+    dispatch(markAllComplete())
+  }
+  const handleClearComplete = () => {
+    dispatch(clearCompleted())
   }
 
   return (
@@ -69,13 +75,13 @@ export const TodoApp = () => {
               ( <div className='flex items-center gap-2'>
                 {
                   stats.completed > 0 &&
-                  (<button className='flex items-center gap-3 text-red-600 hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm'>
+                  (<button onClick={handleClearComplete} className='flex items-center gap-3 text-red-600 hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm'>
                     <Trash2 size={20} /> Clear Completed
                   </button>)
                 }
                 {
                   stats.active > 0 &&
-                  (<button className='flex items-center gap-3 text-green-600 hover:text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm'>
+                  (<button onClick={handleMarkComplete} className='flex items-center gap-3 text-green-600 hover:text-green-700 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm'>
                     <CheckCircle2 size={20} /> Mark All Completed
                   </button>)
                 }
