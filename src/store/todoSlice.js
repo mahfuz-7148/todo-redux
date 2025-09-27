@@ -13,7 +13,6 @@ const loadTodos = () => {
 const saveTodos = (todo) => {
   try {
    localStorage.setItem('todos', JSON.stringify(todo))
-    return saved ? JSON.parse(saved) : []
   }
   catch (error){
     console.error(error)
